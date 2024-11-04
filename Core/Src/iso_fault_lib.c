@@ -57,13 +57,20 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
                     Difference = (0xffffffff - IC_Val1) + IC_Val2;
                 }
 
+                uint32_t highTime;
+                if (IC_Val3 >= IC_Val1) {
+                    highTime = IC_Val3 - IC_Val1;
+                } else {
+                    highTime = (0xffffffff - IC_Val1) + IC_Val3;
+                }
+
                 float refClock = TIMCLOCK / (PRESCALAR);
                 float mFactor = 1000.0 / refClock;
 
                 frequency = refClock / Difference;
-                usWidth = (IC_Val2 - IC_Val3) * mFactor;
+                usWidth = (highTime)*mFactor;
                 signal_frequency = frequency;
-                duty_cycle = (float)usWidth * frequency / 1000.0f;
+                duty_cycle = (float)1 - ((float)highTime / (float)Difference);
 
                 __HAL_TIM_SET_COUNTER(htim, 0); // reset the counter
                 Is_First_Captured = 3;          // set it back to false

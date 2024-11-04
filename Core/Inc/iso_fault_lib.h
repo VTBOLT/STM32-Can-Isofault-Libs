@@ -8,8 +8,8 @@
 #include <stdlib.h>
 
 /* Constants */
-#define EQN_B 94.847f  // y-intercept in eq to find duty cycle from resistance
-#define EQN_M -0.0599f // slope in eq to find duty cycle from resistance
+#define EQN_B 94.964f // y-intercept in eq to find duty cycle from resistance
+#define EQN_M -0.072f // slope in eq to find duty cycle from resistance
 
 /* Function declarations */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim);
